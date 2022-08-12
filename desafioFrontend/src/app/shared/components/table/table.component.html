@@ -1,0 +1,34 @@
+<table mat-table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th *ngFor="let head of Header">{{ head.Head }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let item of Body | paginate: { itemsPerPage: 10, currentPage: p }"
+    >
+      <td *ngFor="let head of Header">
+        <div *ngIf="head.body != ''">
+          {{ item[head.Body] }}
+        </div>
+        <div *ngIf="head.Body == ''">
+          <a
+            (click)="editUser(item)"
+            style="margin-right: 3rem; cursor: pointer"
+            ><i [class]="head.icon"></i
+          ></a>
+          <a (click)="deleteUser(item)" style="cursor: pointer"
+            ><i [class]="head.secondIcon"></i
+          ></a>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="justify-content: end; text-align: end; margin-right: 1.5rem">
+  <pagination-controls
+    class="paginator"
+    (pageChange)="p = $event"
+  ></pagination-controls>
+</div>

@@ -1,0 +1,53 @@
+<div class="login">
+  <mat-card class="card-login">
+    <form
+      class="form-signin"
+      [formGroup]="loginForm"
+      (ngSubmit)="login(loginForm)"
+    >
+      <div class="container">
+        <mat-card-title class="title">Ports Code</mat-card-title>
+        <div>
+          <mat-form-field
+            class="example-full-width"
+            appearance="outline"
+            style="margin-top: 3rem"
+          >
+            <mat-label for="username">Email</mat-label>
+            <input
+              matInput
+              type="email"
+              id="username"
+              name="username"
+              formControlName="username"
+              class="formcontrol"
+              placeholder="User Name"
+              required
+              autofocus
+            />
+          </mat-form-field>
+          <div>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label for="password">Password</mat-label>
+              <input
+                matInput
+                type="password"
+                id="password"
+                name="password"
+                formControlName="password"
+                class="formcontrol"
+                placeholder="Password"
+                required
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="padding-bottom: 1rem; margin-top: 2rem">
+          <button mat-flat-button type="submit" class="btn-login">
+            Sign In
+          </button>
+        </div>
+      </div>
+    </form></mat-card
+  >
+</div>

@@ -1,0 +1,14 @@
+.card-logout {
+  width: 400px;
+}
+.btn-logout {
+  width: 90px;
+  height: 36px;
+  background-color: red;
+  color: #fff;
+  text-transform: uppercase;
+}
+.btn-yes {
+  background-color: green !important;
+  width: 50px !important;
+}
