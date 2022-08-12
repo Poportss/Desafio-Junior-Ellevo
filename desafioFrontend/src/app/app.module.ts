@@ -1,4 +1,3 @@
-import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,6 +17,7 @@ import { ViewsModule } from 'src/app/views/views.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');

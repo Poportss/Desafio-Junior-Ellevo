@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AuthenticatedResponse } from 'src/app/_interfaces/authenticated-response.model';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,

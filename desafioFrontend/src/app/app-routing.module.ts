@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
-import { AuthGuard } from 'src/app/guards/auth.guard';
 import { CallListComponent } from 'src/app/views/call-list/call-list.component';
 import { CustomersComponent } from 'src/app/views/customers/customers.component';
 import { DashboardComponent } from 'src/app/views/dashboard/dashboard.component';

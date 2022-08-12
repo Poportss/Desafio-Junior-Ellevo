@@ -1,4 +1,4 @@
-import { INavBarData } from 'src/app/_interfaces/helper';
+import { INavBarData } from 'src/app/shared/_interfaces/helper';
 
 export const navbarData: INavBarData[] = [
   {

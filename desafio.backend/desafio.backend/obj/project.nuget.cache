@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y2WaO0lEgdmTHN8PF5b+EZpT0qqbCT5iJTaq3NNo1p9FRlH8uxnR2rTV8bsEWq5TVNDSu/2RHNWFuy84ZKTwMw==",
+  "dgSpecHash": "78n5s/cwvhNdz4OdQhTj5VmCC0HedCag/YvI8cd0KT59UdeKGdPD7hytySQnlLewM4thCyrTywijIF1RRwYcdQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rafael\\Desktop\\projects\\ellevo\\desafio junior\\desafio-Ellevo\\desafio.backend\\desafio.backend\\desafio.backend.csproj",
+  "projectFilePath": "C:\\Users\\rafael\\Desktop\\projects\\ellevo\\Desafio-Junior-Ellevo\\desafio.backend\\desafio.backend\\desafio.backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rafael\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\rafael\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

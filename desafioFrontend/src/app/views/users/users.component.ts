@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/shared/models/User.model';
 import { AlertService } from 'src/app/shared/service/alert.service';
 import { UserService } from 'src/app/shared/service/user.service';
+import { GenericValidator } from 'src/app/shared/validador/GenericValidator';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,12 +15,12 @@ import Swal from 'sweetalert2';
 })
 export class UsersComponent implements OnInit {
   newUserForm = new FormGroup({
-    name: new FormControl(''),
-    user: new FormControl(''),
-    password: new FormControl(''),
-    cpf: new FormControl(''),
+    name: new FormControl('', [Validators.required]),
+    user: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    cpf: new FormControl('', [Validators.required]),
     phone: new FormControl(''),
-    email: new FormControl(''),
+    email: new FormControl('', [Validators.email]),
   });
 
   constructor(
