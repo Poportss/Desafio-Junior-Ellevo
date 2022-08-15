@@ -1,146 +1,17 @@
 <h1>Users</h1>
 <div style="text-align: end">
-  <button
-    (click)="addUser(modalData)"
-    mat-raised-button
-    align="end"
-    class="btn-new"
-  >
+  <button (click)="addUser()" mat-raised-button align="end" class="btn-new">
     <i class="material-icons" style="margin-right: 0.5rem">&#xE147;</i>
     <span>New User</span>
   </button>
+
+  <div class="card">
+    <app-table
+      [Header]="Header"
+      (onEdit)="editUser($event)"
+      (onDelete)="deleteUser($event)"
+      [Body]="userList"
+      class="table"
+    ></app-table>
+  </div>
 </div>
-<div class="card">
-  <app-table
-    [Header]="Header"
-    [Body]="userList"
-    class="table"
-    (onEdit)="editUser(modalData, $event)"
-    (onDelete)="deleteUser($event)"
-  ></app-table>
-</div>
-
-<ng-template #modalData let-modal>
-  <form [formGroup]="newUserForm" (ngSubmit)="sendForm(newUserForm)">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">{{ formLabel }}</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      >
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-body">
-        <mat-form-field
-          class="example-full-width"
-          appearance="outline"
-          style="margin-right: 1rem"
-        >
-          <mat-label for="name">Name</mat-label>
-          <input
-            matInput
-            type="text"
-            id="name"
-            name="name"
-            formControlName="name"
-            class="formcontrol"
-            placeholder="name"
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label for="user">user</mat-label>
-
-          <input
-            matInput
-            type="text"
-            id="user"
-            name="user"
-            formControlName="user"
-            class="formcontrol"
-            placeholder="user"
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field
-          class="example-full-width"
-          appearance="outline"
-          style="margin-right: 1rem"
-        >
-          <mat-label for="password">Password</mat-label>
-          <input
-            matInput
-            type="password"
-            id="password"
-            name="password"
-            formControlName="password"
-            class="formcontrol"
-            placeholder="Password"
-            required
-          />
-        </mat-form-field>
-        <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label for="cpf">Cpf</mat-label>
-          <input
-            matInput
-            type="text"
-            id="cpf"
-            name="cpf"
-            formControlName="cpf"
-            class="formcontrol"
-            placeholder="cpf"
-            appMask="cpf"
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field
-          class="example-full-width"
-          appearance="outline"
-          style="margin-right: 1rem"
-        >
-          <mat-label for="phone">Phone</mat-label>
-          <input
-            matInput
-            type="tel"
-            id="phone"
-            name="phone"
-            formControlName="phone"
-            class="formcontrol"
-            placeholder="phone"
-            appMask="full-phone"
-          />
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label for="email">Email</mat-label>
-          <input
-            matInput
-            type="email"
-            id="email"
-            name="email"
-            formControlName="email"
-            class="formcontrol"
-            placeholder="email"
-          />
-        </mat-form-field>
-      </div>
-      <div class="modal-footer">
-        <input
-          type="button"
-          (click)="modal.close('Save click')"
-          class="btn btn-danger"
-          data-dismiss="modal"
-          value="Cancelar"
-        />
-        <input type="submit" class="btn btn-success" value="{{ btnLabel }}" />
-      </div>
-    </div>
-  </form>
-</ng-template>

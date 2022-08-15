@@ -1,0 +1,104 @@
+<mat-toolbar>
+  <button
+    class="btn-dialog-close"
+    mat-stroked-button
+    (click)="close()"
+    tabIndex="-1"
+  >
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="newUserForm" class="normal-form" (submit)="onSubmit()">
+  <h2>User Details</h2>
+
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <input formControlName="Name" matInput placeholder="Name" />
+          <mat-error *ngIf="newUserForm.controls['Name'].hasError('required')"
+            >This field is mandatory.</mat-error
+          >
+        </mat-form-field>
+        <div class="controles-container">
+          <mat-form-field>
+            <input formControlName="User" matInput placeholder="User" />
+            <mat-error *ngIf="newUserForm.controls['User'].hasError('required')"
+              >This field is mandatory.</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="controles-container">
+          <mat-form-field>
+            <input formControlName="Password" matInput placeholder="password" />
+            <mat-error
+              *ngIf="newUserForm.controls['Password'].hasError('required')"
+              >This field is mandatory.</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="controles-container">
+          <mat-form-field>
+            <input
+              formControlName="Cpf"
+              matInput
+              placeholder="CPF"
+              appMask="cpf"
+            />
+            <mat-error *ngIf="newUserForm.controls['Cpf'].hasError('required')"
+              >This field is mandatory.</mat-error
+            >
+            <mat-error *ngIf="newUserForm.controls['Cpf'].hasError('minlength')"
+              >Minimum 15 charactors needed.</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <input
+            formControlName="Phone"
+            matInput
+            placeholder="Phone"
+            appMask="phone"
+          />
+          <mat-error *ngIf="newUserForm.controls['Phone'].hasError('required')"
+            >This field is mandatory.</mat-error
+          >
+          <mat-error *ngIf="newUserForm.controls['Phone'].hasError('minlength')"
+            >Minimum 11 charactors needed.</mat-error
+          >
+        </mat-form-field>
+        <div class="controles-container">
+          <mat-form-field>
+            <input formControlName="Email" matInput placeholder="Email" />
+            <mat-error>Invalid email address.</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="button-row" style="margin-top: 2rem">
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="newUserForm.invalid"
+            style="margin-right: 1rem; width: 80px"
+          >
+            Submit
+          </button>
+          <button
+            style="width: 80px"
+            mat-flat-button
+            color="warn"
+            type="button"
+            (click)="onClear()"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

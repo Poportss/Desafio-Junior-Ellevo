@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { CallListComponent } from 'src/app/views/call-list/call-list.component';
-import { CustomersComponent } from 'src/app/views/customers/customers.component';
 import { DashboardComponent } from 'src/app/views/dashboard/dashboard.component';
 import { HomeComponent } from 'src/app/views/home/home.component';
 import { LoginComponent } from 'src/app/views/login/login.component';

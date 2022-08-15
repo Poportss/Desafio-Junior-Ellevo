@@ -1,11 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Subscriber } from 'rxjs';
+
 import { User } from 'src/app/shared/models/User.model';
 import { AlertService } from 'src/app/shared/service/alert.service';
 import { UserService } from 'src/app/shared/service/user.service';
-import { GenericValidator } from 'src/app/shared/validador/GenericValidator';
+import { DialogData } from 'src/app/shared/_interfaces/DialogData';
+import { UsersModalComponent } from 'src/app/views/users-modal/users-modal.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,27 +25,19 @@ import Swal from 'sweetalert2';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  newUserForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    user: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    cpf: new FormControl('', [Validators.required]),
-    phone: new FormControl(''),
-    email: new FormControl('', [Validators.email]),
-  });
-
   constructor(
     private userService: UserService,
     private alertService: AlertService,
-    private modalService: NgbModal,
-    private http: HttpClient
+    public dialog: MatDialog
   ) {}
   public closeModal: string = '';
   public btnLabel: string = '';
-  public formLabel: string = '';
+  public Title: string = '';
+  public Name: string = '';
   public userList: User[] = new Array<User>();
   public users: User = new User();
-
+  public data: DialogData[] = [];
+  private subscriptions = new Subscriber();
   Header = [
     { Head: 'ID', Body: 'UserId' },
     { Head: 'Name', Body: 'Name' },
@@ -51,6 +54,11 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.getUserList();
+    this.subscriptions.add(
+      this.dialog.afterAllClosed.subscribe(() => {
+        this.getUserList();
+      })
+    );
   }
 
   getUserList() {
@@ -59,108 +67,46 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  addUser(content: any) {
-    this.formLabel = 'New User';
-    this.btnLabel = 'Save';
-
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (res) => {
-          this.closeModal = `Closed with: ${res}`;
-        },
-        (res) => {
-          this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-        }
-      );
+  openDialog() {
+    this.dialog.open(UsersModalComponent, this.getModalConfigs());
   }
 
-  getUsersById(id: string) {
-    this.userService.getUserById(id).subscribe((data: User) => {
-      this.users = data;
-    });
-  }
+  editUser(item) {
+    debugger;
 
-  editUser(content: any, item) {
-    this.formLabel = 'Edit User';
-    this.btnLabel = 'Upadate';
-
-    this.getUsersById(item.UserId);
-
-    this.newUserForm.patchValue({
-      name: item.Name,
-      user: item.User,
-      password: item.Password,
-      cpf: item.Cpf,
-      phone: item.Phone,
-      email: item.Email,
-    });
-
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (res) => {
-          this.closeModal = `Closed with: ${res}`;
-        },
-        (res) => {
-          this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-        }
-      );
+    this.dialog.open(UsersModalComponent, this.getModalConfigs(item));
   }
 
   deleteUser(item) {
-    this.alertService
-      .question('', 'Do you really want to delete this user?', 'Yes!')
-      .then((data) => {
-        if (data.isConfirmed) {
-          this.userService.deleteUser(item.UserId).subscribe((data) => {
-            this.getUserList();
-            this.alertService.success('', 'user deleted successfully!', 'OK');
-          });
-        }
-      });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#233238',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(item.UserId).subscribe((data) => {
+          this.getUserList();
+        });
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+      }
+    });
   }
 
-  sendForm(item) {
-    const form = {
-      Name: this.newUserForm.value.name,
-      User: this.newUserForm.value.user,
-      Password: this.newUserForm.value.password,
-      Cpf: this.newUserForm.value.cpf,
-      Phone: this.newUserForm.value.phone,
-      Email: this.newUserForm.value.email,
-    };
-    console.log(form);
-    console.log(this.users.UserId);
-    console.log(form.User);
-
-    if (this.users.UserId != undefined) {
-      let Id: number = this.users.UserId;
-      let UserId: string = Id + '';
-      this.userService.updateUser(UserId, form).subscribe((data) => {
-        this.modalService.dismissAll();
-        this.getUserList();
-        this.users = new User();
-
-        this.alertService.success('', 'user updated successfully!', 'Ok');
-      });
-    } else {
-      this.userService.createUser(form).subscribe((data) => {
-        this.modalService.dismissAll();
-        this.getUserList();
-        this.users = new User();
-        this.alertService.success('', 'successfully created user!', 'Ok');
-      });
-    }
+  addUser() {
+    this.openDialog();
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  private getModalConfigs(data: any = undefined) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '60%';
+    dialogConfig.data = { id: data?.Id, user: data };
+
+    return dialogConfig;
   }
 }

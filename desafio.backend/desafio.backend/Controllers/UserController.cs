@@ -61,9 +61,6 @@ namespace desafio.backend.Controllers
             var connect = _configuration.GetConnectionString("CustomerCon");
             MongoClient dbClient = new MongoClient(connect);
 
-            int LastCustomerId = dbClient.GetDatabase("portscodeBd").GetCollection<UserModel>("Customers").AsQueryable().ToList().Count();
-
-            cus.UserId = LastCustomerId + 1;
             cus.Id = Guid.NewGuid().ToString();
 
             dbClient.GetDatabase("portscodeBd").GetCollection<UserModel>("Customers").InsertOne(cus);
@@ -73,12 +70,12 @@ namespace desafio.backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public JsonResult Put(UserModel cus, int id)
+        public JsonResult Put(UserModel cus, string id)
         {
             var connect = _configuration.GetConnectionString("CustomerCon");
             MongoClient dbClient = new MongoClient(connect);
 
-            var filter = Builders<UserModel>.Filter.Eq("UserId", id);
+            var filter = Builders<UserModel>.Filter.Eq("_id", id);
             var update = Builders<UserModel>.Update.Set("Name", cus.Name)
                                                         .Set("User", cus.User)
                                                         .Set("Password", cus.Password)

@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { catchError, delay, map, retryWhen, take } from 'rxjs/operators';
 import { User } from 'src/app/shared/models/User.model';
 import { HttpUtilService } from 'src/app/shared/service/http-util.service';
 import { environment } from 'src/environments/environment';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +29,7 @@ export class UserService {
       );
   }
 
-  updateUser(id: string, body) {
+  updateUser(id: number, body: User) {
     return this.http
       .put('https://localhost:5001/api/user/' + id, body)
       .pipe(map(this.httpUtil.extractData))

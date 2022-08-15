@@ -25,7 +25,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {}
 
-  async editUser(item: string) {
+  editUser(item: string) {
     this.onEdit.emit(item);
   }
 

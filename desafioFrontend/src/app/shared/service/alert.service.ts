@@ -1,56 +1,41 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AlertService {
-  success(title: string, textMessage: string, textbutton: string) {
-    return Swal.fire({
-      icon: 'success',
-      title: title,
-      text: textMessage,
-      confirmButtonText: textbutton,
-      confirmButtonColor: '#233238',
-    });
+  constructor(public snackBar: MatSnackBar) {}
+
+  config: MatSnackBarConfig = {
+    duration: 3000,
+    horizontalPosition: 'right',
+    verticalPosition: 'top',
+  };
+
+  success(msg) {
+    this.config['panelClass'] = ['notification', 'success'];
+    this.snackBar.open(msg, '', this.config);
   }
 
-  error(title: string, textMessage: string, textbutton: string) {
-    return Swal.fire({
-      icon: 'error',
-      title: title,
-      text: textMessage,
-      confirmButtonText: textbutton,
-    });
+  warn(msg) {
+    this.config['panelClass'] = ['notification', 'warn'];
+    this.snackBar.open(msg, '', this.config);
   }
-
-  warning(title: string, textMessage: string, textbutton: string) {
-    return Swal.fire({
+  question() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
       icon: 'warning',
-      title: title,
-      text: textMessage,
-      confirmButtonText: textbutton,
-    });
-  }
-
-  info(title: string, textMessage: string, textbutton: string) {
-    return Swal.fire({
-      icon: 'info',
-      title: title,
-      text: textMessage,
-      confirmButtonText: textbutton,
-    });
-  }
-
-  question(title: string, textMessage: string, textbutton: string) {
-    return Swal.fire({
-      icon: 'question',
-      title: title,
-      text: textMessage,
       showCancelButton: true,
-      showConfirmButton: true,
       confirmButtonColor: '#233238',
-      confirmButtonText: textbutton,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+      }
     });
   }
 }

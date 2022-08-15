@@ -8,8 +8,7 @@ namespace desafio.backend.Models
    
     public class UserModel
     {
-        public Object Id { get; set; }
-        public int UserId { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string User { get; set; }
         public string Password { get; set; }

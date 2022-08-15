@@ -14,7 +14,7 @@ import {
   HostListener,
   Input,
 } from '@angular/core';
-import { navbarData } from 'src/app/views/sidenav/nav-data';
+import { navbarData } from 'src/app/shared/_interfaces/nav-data';
 
 interface SideNavToggle {
   screenWidth: number;
