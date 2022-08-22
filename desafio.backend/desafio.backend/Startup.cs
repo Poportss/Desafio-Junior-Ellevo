@@ -13,12 +13,16 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using System.IO;
+using desafio.backend.Mappers;
+using desafio.backend.Infra.Contract;
+using Microsoft.AspNetCore.Http;
 
 namespace desafio.backend
 {
@@ -36,7 +40,18 @@ namespace desafio.backend
         {
             Configuration = new ConfigurationBuilder().SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName).AddJsonFile("appsettings.json", false).Build();
 
+            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
+            services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+            services.AddTransient<UserService>();
+            services.AddTransient<LoginService>();
+            services.AddTransient<TaskService>();
+            services.AddTransient<ActivityService>();
+
+            services.AddHttpContextAccessor();
+            services.AddTransient<IUserRepository,UserRepository>();
+            services.AddAutoMapper(typeof(EntityToModelMapping),typeof(ModelToEntityMapping));
             services.AddCors(options =>
             {
                 options.AddPolicy("EnableCORS", builder =>
@@ -62,7 +77,7 @@ namespace desafio.backend
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = "https://localhost:5001",
                     ValidAudience = "https://localhost:5001",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")),
                 };
             });
 

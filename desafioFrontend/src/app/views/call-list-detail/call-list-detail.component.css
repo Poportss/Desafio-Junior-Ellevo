@@ -1,0 +1,16 @@
+.btn-new {
+  background-color: #233238;
+  color: white;
+  margin-left: 1rem;
+  width: 100px;
+}
+.activity-list {
+  background-color: #67676797;
+  color: white;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+.activity-list span {
+  font-size: larger;
+  margin-left: 1rem;
+}

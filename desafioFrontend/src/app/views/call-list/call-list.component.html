@@ -1,32 +1,17 @@
 <h1>Call List</h1>
-<div class="card">
-  <div class="card-head">Lorem ipsum dolor - Call List 1</div>
-  <div class="card-body">
-    Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Suspendisse ut
-    ligula a eros fringilla dapibus sodales quis nisi. In in arcu id dolor
-    porttitor eleifend. Morbi eget augue ac tellus pellentesque dictum.
-    Suspendisse et cursus ligula. Quisque venenatis eu dolor non volutpat.
-    Aenean sit amet mollis est.
-  </div>
-</div>
-<div class="card">
-  <div class="card-head">Lorem ipsum dolor - Call List 2</div>
-  <div class="card-body">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut
-    ligula a eros fringilla dapibus sodales quis nisi. In in arcu id dolor
-    porttitor eleifend. Morbi eget augue ac tellus pellentesque dictum.
-    Suspendisse et cursus ligula. Quisque venenatis eu dolor non volutpat.
-    Aenean sit amet mollis est.
-  </div>
-</div>
+<div style="text-align: end">
+  <button (click)="addTask()" mat-raised-button align="end" class="btn-new">
+    <i class="material-icons" style="margin-right: 0.5rem">&#xE147;</i>
+    <span>New Task</span>
+  </button>
 
-<div class="card">
-  <div class="card-head">Lorem ipsum dolor - Call List 3</div>
-  <div class="card-body">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut
-    ligula a eros fringilla dapibus sodales quis nisi. In in arcu id dolor
-    porttitor eleifend. Morbi eget augue ac tellus pellentesque dictum.
-    Suspendisse et cursus ligula. Quisque venenatis eu dolor non volutpat.
-    Aenean sit amet mollis est.
+  <div class="card">
+    <app-table
+      [Header]="Header"
+      (onEdit)="editTask($event)"
+      (onDelete)="deleteTask($event)"
+      [Body]="taskList"
+      class="table"
+    ></app-table>
   </div>
 </div>

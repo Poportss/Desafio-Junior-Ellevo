@@ -1,7 +1,9 @@
 ﻿
 using desafio.backend.Models;
+using desafio.backend.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System;
@@ -14,64 +16,31 @@ namespace desafio.backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : Controller
+    public class AuthController : ControllerBase
     {
-       
 
-        private readonly IConfiguration _configuration;
-        public AuthController(IConfiguration configuration)
+
+
+        private readonly ILogger<AuthController> _logger;
+        private readonly LoginService _loginService;
+
+
+        public AuthController(ILogger<AuthController> logger, LoginService loginService)
         {
-            _configuration = configuration;
+            _logger = logger;
+            _loginService = loginService;
         }
 
-        public IConfiguration Get_configuration()
-        {
-            return _configuration;
-        }
-       
+
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel user)
+        public ActionResult<object> Login([FromBody] LoginModel user)
         {
-            var connect = _configuration.GetConnectionString("CustomerCon");
-            MongoClient dbClient = new MongoClient(connect);
 
-            var filter = Builders<LoginModel>.Filter.Eq("User", user.User);
+            var result = _loginService.Login(user);
 
-            
-           
-            var search = dbClient.GetDatabase("portscodeBd").GetCollection<LoginModel>("Customers").Find(filter).Project(p => new LoginModel { User = p.User, Password = p.Password}).Limit(1).Single();
-        
-            if (search is null)
-            {
-                return BadRequest("Invalid client request");
-            }
+            return new {Token = result } ;
 
-            if (user.User == search.User && user.Password == search.Password)
-            {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.User),
-                    new Claim(ClaimTypes.Role, "Manager")
-                };
-
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:5001",
-                    audience: "https://localhost:5001",
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-
-                return Ok(new { Token = tokenString });
-            }
-
-            return Unauthorized();
         }
     }
 }

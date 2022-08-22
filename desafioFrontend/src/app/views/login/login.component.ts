@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       .post('https://localhost:5001/api/auth/login', creadentials)
       .subscribe(
         (response) => {
-          const token = (<any>response).token;
+          const token = (<any>response).Token;
           localStorage.setItem('jwt', token);
           this.invalidLogin = false;
           const Toast = Swal.mixin({

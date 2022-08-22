@@ -15,7 +15,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
-
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
@@ -28,8 +27,8 @@ export function tokenGetter() {
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    ViewsModule,
     SharedModule,
+    ViewsModule,
     MaterialModule,
     ReactiveFormsModule,
     JwtModule.forRoot({

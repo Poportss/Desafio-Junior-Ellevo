@@ -1,11 +1,12 @@
-<table mat-table class="table table-bordered table-hover">
+<table mat-table class="table" style="border: none">
   <thead>
-    <tr>
+    <tr style="text-align: start">
       <th *ngFor="let head of Header">{{ head.Head }}</th>
     </tr>
   </thead>
   <tbody>
     <tr
+      style="text-align: start"
       *ngFor="let item of Body | paginate: { itemsPerPage: 10, currentPage: p }"
     >
       <td *ngFor="let head of Header">
@@ -14,11 +15,15 @@
         </div>
         <div *ngIf="head.Body == ''">
           <a
+            *ngIf="!item.IsAdmin"
             (click)="editUser(item)"
             style="margin-right: 3rem; cursor: pointer"
             ><i [class]="head.icon"></i
           ></a>
-          <a (click)="deleteUser(item)" style="cursor: pointer"
+          <a
+            *ngIf="!item.IsAdmin"
+            (click)="deleteUser(item)"
+            style="cursor: pointer"
             ><i [class]="head.secondIcon"></i
           ></a>
         </div>

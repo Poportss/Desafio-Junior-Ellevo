@@ -9,6 +9,11 @@ namespace desafio.backend.Mappers
         public EntityToModelMapping()
         {
             CreateMap<UserEntity, UserModel>();
+            CreateMap<TaskEntity, TaskModel>();
+            CreateMap<ActivityEntity, ActivityModel>();
+
+
         }
+ 
     }
 }

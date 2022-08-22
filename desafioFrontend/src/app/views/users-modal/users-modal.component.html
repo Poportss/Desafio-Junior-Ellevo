@@ -1,6 +1,7 @@
-<mat-toolbar>
+<mat-toolbar class="mat-tool">
   <button
     class="btn-dialog-close"
+    style="border: none"
     mat-stroked-button
     (click)="close()"
     tabIndex="-1"
@@ -12,17 +13,19 @@
 <form [formGroup]="newUserForm" class="normal-form" (submit)="onSubmit()">
   <h2>User Details</h2>
 
-  <mat-grid-list cols="2" rowHeight="300px">
+  <mat-grid-list cols="2" rowHeight="350px">
     <mat-grid-tile>
       <div class="controles-container">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
           <input formControlName="Name" matInput placeholder="Name" />
           <mat-error *ngIf="newUserForm.controls['Name'].hasError('required')"
             >This field is mandatory.</mat-error
           >
         </mat-form-field>
         <div class="controles-container">
-          <mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>User</mat-label>
             <input formControlName="User" matInput placeholder="User" />
             <mat-error *ngIf="newUserForm.controls['User'].hasError('required')"
               >This field is mandatory.</mat-error
@@ -30,8 +33,14 @@
           </mat-form-field>
         </div>
         <div class="controles-container">
-          <mat-form-field>
-            <input formControlName="Password" matInput placeholder="password" />
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              type="password"
+              formControlName="Password"
+              matInput
+              placeholder="Password"
+            />
             <mat-error
               *ngIf="newUserForm.controls['Password'].hasError('required')"
               >This field is mandatory.</mat-error
@@ -39,7 +48,8 @@
           </mat-form-field>
         </div>
         <div class="controles-container">
-          <mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>CPF</mat-label>
             <input
               formControlName="Cpf"
               matInput
@@ -58,7 +68,8 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="controles-container">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
           <input
             formControlName="Phone"
             matInput
@@ -73,7 +84,8 @@
           >
         </mat-form-field>
         <div class="controles-container">
-          <mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
             <input formControlName="Email" matInput placeholder="Email" />
             <mat-error>Invalid email address.</mat-error>
           </mat-form-field>

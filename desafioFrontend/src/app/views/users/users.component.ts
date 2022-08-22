@@ -30,16 +30,11 @@ export class UsersComponent implements OnInit {
     private alertService: AlertService,
     public dialog: MatDialog
   ) {}
-  public closeModal: string = '';
-  public btnLabel: string = '';
-  public Title: string = '';
-  public Name: string = '';
   public userList: User[] = new Array<User>();
   public users: User = new User();
   public data: DialogData[] = [];
   private subscriptions = new Subscriber();
   Header = [
-    { Head: 'ID', Body: 'UserId' },
     { Head: 'Name', Body: 'Name' },
     { Head: 'User', Body: 'User' },
     { Head: 'Phone', Body: 'Phone' },
@@ -72,8 +67,6 @@ export class UsersComponent implements OnInit {
   }
 
   editUser(item) {
-    debugger;
-
     this.dialog.open(UsersModalComponent, this.getModalConfigs(item));
   }
 
@@ -88,7 +81,7 @@ export class UsersComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.deleteUser(item.UserId).subscribe((data) => {
+        this.userService.deleteUser(item.Id).subscribe((data) => {
           this.getUserList();
         });
         Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
@@ -104,7 +97,7 @@ export class UsersComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '65%';
     dialogConfig.data = { id: data?.Id, user: data };
 
     return dialogConfig;

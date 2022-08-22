@@ -1,0 +1,124 @@
+<div class="call-list-detail">
+  <div class="container">
+    <form [formGroup]="UpadateForm" class="normal-form" (submit)="save()">
+      <div class="row">
+        <div class="col-6">
+          <mat-card
+            style="width: 100%; height: 92%; box-shadow: 3px 3px #888888"
+          >
+            <div>
+              <mat-form-field
+                class="example-full-width"
+                style="width: 100%"
+                appearance="outline"
+              >
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="Title" />
+              </mat-form-field>
+            </div>
+            <div>
+              <ckeditor
+                [required]
+                formControlName="Description"
+                [editor]="Editor"
+              ></ckeditor>
+            </div>
+          </mat-card>
+        </div>
+        <div class="col-6">
+          <mat-card
+            style="width: 100%; height: 92%; box-shadow: 3px 3px #888888"
+          >
+            <div>
+              <mat-form-field
+                class="example-full-width"
+                style="width: 100%"
+                appearance="outline"
+              >
+                <mat-label>Responsible</mat-label>
+                <input
+                  formControlName="Responsible"
+                  matInput
+                  placeholder="Responsible"
+                />
+              </mat-form-field>
+            </div>
+            <mat-form-field
+              (change)="changeDefault($event.target.value)"
+              style="width: 100%"
+              appearance="outline"
+            >
+              <mat-select placeholder="Status" formControlName="Status">
+                <mat-option
+                  [selected]="option === nrSelect"
+                  *ngFor="let name of enumKeys"
+                  [value]="name"
+                >
+                  {{ name | status }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div style="text-align: end">
+              <button
+                type="submit"
+                mat-flat-button
+                class="btn btn-success"
+                style="margin-bottom: 0.5rem"
+              >
+                Save
+              </button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <mat-card
+    style="width: 100%; margin-top: 0.5rem; box-shadow: 3px 3px #888888"
+  >
+    <form [formGroup]="detailForm" class="normal-form" (submit)="onSubmit()">
+      <mat-card-title>Activity</mat-card-title>
+      <div style="text-align: end">
+        <button
+          style="margin-bottom: 1rem; justify-content: end"
+          mat-flat-button
+          class="btn-new"
+        >
+          New
+        </button>
+      </div>
+      <div>
+        <ckeditor
+          [required]
+          formControlName="Activity"
+          [editor]="Editor"
+        ></ckeditor>
+      </div>
+      <div class="activity-list">
+        <span
+          *ngFor="
+            let activity of taskActivity
+              | paginate: { itemsPerPage: 4, currentPage: p }
+          "
+        >
+          {{ activity?.Activity }}
+          <br />
+        </span>
+      </div>
+      <div
+        style="
+          justify-content: end;
+          text-align: end;
+          margin-right: 1.5rem;
+          margin-top: 1rem;
+        "
+      >
+        <pagination-controls
+          class="paginator"
+          (pageChange)="p = $event"
+        ></pagination-controls>
+      </div>
+    </form>
+  </mat-card>
+</div>

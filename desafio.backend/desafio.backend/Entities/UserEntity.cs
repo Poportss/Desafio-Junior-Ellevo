@@ -2,35 +2,40 @@
 
 namespace desafio.backend.Entities
 {
+    [BsonDiscriminator("User")]
     public class UserEntity : BaseEntity
     {
-        public UserEntity(string name, string user, string password, string cpf, string phone, string email)
+        public UserEntity(string Name, string User, string Password, string Cpf, string Phone, string Email, bool IsAdmin)
         {
-            Name = name;
-            User = user;
-            Password = password;
-            Cpf = cpf;
-            Phone = phone;
-            Email = email;
-            
+            this.Name = Name;
+            this.User = User;
+            this.Password = Password;
+            this.Cpf = Cpf;
+            this.Phone = Phone;
+            this.Email = Email;
+
         }
 
-        [BsonElement("name")]
-        public string Name { get; private set; }
+        [BsonElement("Name")]
+        public string Name { get; set; }
 
-        [BsonElement("user")]
-        public string User { get; private set; }
+        [BsonElement("User")]
+        public string User { get; set; }
 
-        [BsonElement("password")]
-        public string Password { get; private set; }
+        [BsonElement("Password")]
+        public string Password { get; set; }
 
-        [BsonElement("cpf")]
-        public string Cpf { get; private set; }
+        [BsonElement("Cpf")]
+        public string Cpf { get; set; }
 
-        [BsonElement("phone")]
-        public string Phone { get; private set; }
+        [BsonElement("Phone")]
+        public string Phone { get; set; }
 
-        [BsonElement("email")]
-        public string Email { get; private set; }
+        [BsonElement("Email")]
+        public string Email { get; set; }
+        [BsonElement("IsAdmin")]
+        public bool IsAdmin { get; set; }
+
+
     }
 }

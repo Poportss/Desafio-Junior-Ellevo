@@ -1,0 +1,91 @@
+<mat-toolbar class="mat-tool">
+  <button
+    class="btn-dialog-close"
+    style="border: none"
+    mat-stroked-button
+    (click)="close()"
+    tabIndex="-1"
+  >
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="newTaskForm" class="normal-form" (submit)="onSubmit()">
+  <h2>Task Details</h2>
+  <div class="control-container">
+    <mat-form-field
+      class="example-full-width"
+      style="width: 100%"
+      appearance="outline"
+    >
+      <mat-label>Title</mat-label>
+      <input formControlName="Title" matInput placeholder="Title" />
+      <mat-error *ngIf="newTaskForm.controls['Title'].hasError('required')"
+        >This field is mandatory.</mat-error
+      >
+    </mat-form-field>
+  </div>
+
+  <div class="control-container">
+    <mat-form-field
+      class="example-full-width"
+      style="width: 100%"
+      appearance="outline"
+    >
+      <mat-label>Responsible</mat-label>
+      <input formControlName="Responsible" matInput placeholder="Responsible" />
+      <mat-error
+        *ngIf="newTaskForm.controls['Responsible'].hasError('required')"
+        >This field is mandatory.</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div class="control-container">
+    <mat-form-field
+      (change)="changeDefault($event.target.value)"
+      style="width: 100%"
+      appearance="outline"
+    >
+      <mat-select placeholder="Status" formControlName="Status">
+        <mat-option
+          [selected]="option === nrSelect"
+          *ngFor="let name of enumKeys"
+          [value]="name"
+        >
+          {{ name | status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="control-container">
+    <span>Descrição</span>
+    <ckeditor
+      [required]
+      formControlName="Description"
+      [editor]="Editor"
+    ></ckeditor>
+    <mat-error *ngIf="newTaskForm.controls['Description'].hasError('required')"
+      >This field is mandatory.</mat-error
+    >
+  </div>
+  <div class="button-row" style="margin-top: 1rem; text-align: end">
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="newTaskForm.invalid"
+      style="margin-right: 1rem; width: 80px"
+    >
+      Submit
+    </button>
+    <button
+      style="width: 80px"
+      mat-flat-button
+      color="warn"
+      type="button"
+      (click)="onClear()"
+    >
+      Clear
+    </button>
+  </div>
+</form>

@@ -11,13 +11,13 @@ import { RouterModule } from '@angular/router';
 import { CallListComponent } from './call-list/call-list.component';
 import { BodyComponent } from './body/body.component';
 import { UsersComponent } from 'src/app/views/users/users.component';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogModule,
-} from '@angular/material/dialog';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { UsersModalComponent } from 'src/app/views/users-modal/users-modal.component';
+import { TasksModalComponent } from 'src/app/views/tasks-modal/tasks-modal.component';
+import { CallListDetailComponent } from 'src/app/views/call-list-detail/call-list-detail.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -30,6 +30,8 @@ import { UsersModalComponent } from 'src/app/views/users-modal/users-modal.compo
     CallListComponent,
     BodyComponent,
     UsersModalComponent,
+    TasksModalComponent,
+    CallListDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,8 @@ import { UsersModalComponent } from 'src/app/views/users-modal/users-modal.compo
     ReactiveFormsModule,
     RouterModule,
     MaterialModule,
+    CKEditorModule,
+    NgxPaginationModule,
   ],
   exports: [
     LoginComponent,
@@ -46,7 +50,8 @@ import { UsersModalComponent } from 'src/app/views/users-modal/users-modal.compo
     SidenavComponent,
     DashboardComponent,
     SettingsComponent,
-    UsersModalComponent,
+    TasksModalComponent,
+    CallListDetailComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

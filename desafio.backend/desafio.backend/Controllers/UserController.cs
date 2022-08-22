@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using desafio.backend.Entities;
 using desafio.backend.Models;
 using desafio.backend.Service;
@@ -15,92 +16,80 @@ using System.Threading.Tasks;
 
 namespace desafio.backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+
     public class UserController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
-        public UserController(IConfiguration configuration)
+
+        private readonly ILogger<UserController> _logger;
+        private readonly UserService _userService;
+        private readonly IMapper _mapper;
+
+
+        public UserController(ILogger<UserController> logger, UserService userService, IMapper mapper)
         {
-            _configuration = configuration;
+            _logger = logger;
+            _userService = userService;
+            _mapper = mapper;
         }
 
 
-        public IConfiguration Get_configuration()
-        {
-            return _configuration;
-        }
-       
         [HttpGet]
-        public JsonResult Get()
+        public ActionResult<List<UserModel>> GetAll() => _userService.GetAll();
+
+
+        [HttpGet("{id:length(24)}", Name = "GetUser")]
+        public ActionResult<UserModel> Get(string id)
         {
-            var connect = _configuration.GetConnectionString("CustomerCon");
-            MongoClient dbClient = new MongoClient(connect);
+            var user = _userService.Get(id);
 
-            var dbList = dbClient.GetDatabase("portscodeBd").GetCollection<UserModel>("Customers").AsQueryable().ToList();
+            if (user is null)
+                return NotFound();
 
-            return new JsonResult(dbList);
-        }
-
-        [HttpGet("{id}")]
-        public JsonResult GetById(int id)
-        {
-            var connect = _configuration.GetConnectionString("CustomerCon");
-            MongoClient dbClient = new MongoClient(connect);
-
-            var filter = Builders<UserModel>.Filter.Eq("UserId", id);
-
-            var search = dbClient.GetDatabase("portscodeBd").GetCollection<UserModel>("Customers").Find(filter).FirstOrDefault(); 
-
-            return new JsonResult(search);
+            return _mapper.Map< UserModel >(user);
         }
 
         [HttpPost]
-        public JsonResult Post(UserModel cus)
+        public ActionResult<UserModel> Create(UserModel user)
         {
-            var connect = _configuration.GetConnectionString("CustomerCon");
-            MongoClient dbClient = new MongoClient(connect);
+            var result = _userService.Create(user);
 
-            cus.Id = Guid.NewGuid().ToString();
+            return CreatedAtRoute("GetUser", new { id = result.Id.ToString() }, result);
+        }
 
-            dbClient.GetDatabase("portscodeBd").GetCollection<UserModel>("Customers").InsertOne(cus);
+        [HttpPut("{id:length(24)}")]
+        public ActionResult<UserModel> Update(string id, UpdateUserModel user)
+        {
+            var userIn = _userService.Get(id);
 
-            return new JsonResult("Added Successfully");
+            if (userIn is null)
+                return NotFound();
+
+            userIn = _mapper.Map(user, userIn);
+
+            _userService.Update(id, userIn);
+
+            return CreatedAtRoute("GetUser", new { id = id }, user);
 
         }
 
-        [HttpPut("{id}")]
-        public JsonResult Put(UserModel cus, string id)
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
         {
-            var connect = _configuration.GetConnectionString("CustomerCon");
-            MongoClient dbClient = new MongoClient(connect);
+            var user = _userService.Get(id);
 
-            var filter = Builders<UserModel>.Filter.Eq("_id", id);
-            var update = Builders<UserModel>.Update.Set("Name", cus.Name)
-                                                        .Set("User", cus.User)
-                                                        .Set("Password", cus.Password)
-                                                        .Set("Cpf", cus.Cpf)
-                                                        .Set("Phone", cus.Phone)
-                                                        .Set("Email", cus.Email);
+            if (user is null)
+                return NotFound();
 
-            dbClient.GetDatabase("portscodeBd").GetCollection<UserModel>("Customers").UpdateOne(filter,update);
+            _userService.Remove(user.Id);
 
-            return new JsonResult("Update Successfully");
+            var result = new
+            {
+                message = "User deleted!"
+            };
 
-        }
-
-        [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
-        {
-            var connect = _configuration.GetConnectionString("CustomerCon");
-            MongoClient dbClient = new MongoClient(connect);
-
-            var filter = Builders<UserModel>.Filter.Eq("UserId", id);
-
-            dbClient.GetDatabase("portscodeBd").GetCollection<UserModel>("Customers").DeleteOne(filter);
-
-            return new JsonResult("Delete Successfully");
-
+            return Ok(result);
         }
     }
 }

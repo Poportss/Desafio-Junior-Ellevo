@@ -5,4 +5,5 @@ export class User {
   Cpf: string;
   Phone?: string;
   Email?: string;
+  IsAdmin: boolean;
 }

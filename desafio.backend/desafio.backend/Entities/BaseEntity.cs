@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace desafio.backend.Entities
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

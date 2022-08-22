@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscriber } from 'rxjs';
-import { CrudOperation } from 'src/app/shared/models/crud-operation.enum';
+import { AlertService } from 'src/app/shared/service/alert.service';
 import { UserService } from 'src/app/shared/service/user.service';
 import { DialogData } from 'src/app/shared/_interfaces/DialogData';
 
@@ -27,6 +27,7 @@ export class UsersModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<UsersModalComponent>,
     private userservice: UserService,
+    private alertService: AlertService,
     @Inject(MAT_DIALOG_DATA) public data: { id: number; user: DialogData }
   ) {}
 
@@ -39,23 +40,22 @@ export class UsersModalComponent implements OnInit {
 
     this.subscriptions.add(
       this.dialogRef.afterOpened().subscribe(() => {
-        debugger;
-
         this.newUserForm.patchValue(this.data.user);
       })
     );
   }
 
   onSubmit() {
-    debugger;
     if (this.data.id) {
       this.userservice
         .updateUser(this.data.id, this.newUserForm.value)
         .subscribe(() => {
+          this.alertService.editUser();
           this.close();
         });
     } else
       this.userservice.createUser(this.newUserForm.value).subscribe(() => {
+        this.alertService.createUser();
         this.close();
       });
   }
