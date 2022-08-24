@@ -42,6 +42,12 @@ namespace desafio.backend.Controllers
         {
             var result = _ActivityService.Create(activity);
 
+            if (result == null)
+            {
+                return BadRequest(new { Message = "Only the responsible person or generator can add activities" });
+
+            }
+
             return result;
         }
 

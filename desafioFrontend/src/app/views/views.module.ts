@@ -11,13 +11,14 @@ import { RouterModule } from '@angular/router';
 import { CallListComponent } from './call-list/call-list.component';
 import { BodyComponent } from './body/body.component';
 import { UsersComponent } from 'src/app/views/users/users.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { UsersModalComponent } from 'src/app/views/users-modal/users-modal.component';
 import { TasksModalComponent } from 'src/app/views/tasks-modal/tasks-modal.component';
 import { CallListDetailComponent } from 'src/app/views/call-list-detail/call-list-detail.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     RouterModule,
     MaterialModule,
-    CKEditorModule,
     NgxPaginationModule,
+    CKEditorModule,
   ],
   exports: [
     LoginComponent,

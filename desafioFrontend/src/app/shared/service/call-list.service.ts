@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, retryWhen, delay, take, catchError } from 'rxjs';
+import { map, catchError, throwError } from 'rxjs';
 import { ActivityModel } from 'src/app/shared/models/activity.model';
 import { HttpUtilService } from 'src/app/shared/service/http-util.service';
 
@@ -18,8 +18,9 @@ export class CallListService {
       .post('https://localhost:5001/api/activity', activity)
       .pipe(map(this.httpUtil.extractData))
       .pipe(
-        retryWhen((errors) => errors.pipe(delay(1000), take(10))),
-        catchError(this.httpUtil.processError)
+        catchError(() => {
+          return throwError(() => new Error('ups sommething happend'));
+        })
       );
   }
 }

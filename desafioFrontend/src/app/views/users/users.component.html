@@ -5,7 +5,7 @@
     <span>New User</span>
   </button>
 
-  <div class="card">
+  <div class="card" *ngIf="userList.length > 0">
     <app-table
       [Header]="Header"
       (onEdit)="editUser($event)"
@@ -13,5 +13,6 @@
       [Body]="userList"
       class="table"
     ></app-table>
+    <mat-spinner *ngIf="userList.length < 0"></mat-spinner>
   </div>
 </div>

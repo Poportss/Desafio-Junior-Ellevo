@@ -16,7 +16,6 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
       { path: 'callList', component: CallListComponent },
       { path: 'settings', component: SettingsComponent },
       { path: 'users', component: UsersComponent },
@@ -24,7 +23,7 @@ const routes: Routes = [
       {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'dashboard',
+        redirectTo: 'users',
       },
     ],
   },

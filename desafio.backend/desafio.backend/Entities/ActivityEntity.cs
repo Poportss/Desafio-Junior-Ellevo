@@ -10,6 +10,7 @@ namespace desafio.backend.Entities
 
         [BsonElement("TaskId")]
         public string TaskId { get; set; }
+
     }
 
 

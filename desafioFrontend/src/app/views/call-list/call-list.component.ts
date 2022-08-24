@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { end } from '@popperjs/core';
+
 import { Subscriber } from 'rxjs';
 import { Task } from 'src/app/shared/models/Task.model';
 import { StatusPipe } from 'src/app/shared/pipes/status.pipe';
@@ -29,20 +29,16 @@ export class CallListComponent implements OnInit {
 
   Header = [
     { Head: 'Title', Body: 'Title' },
-    { Head: 'Description', Body: 'Description' },
-
-    { Head: 'Responsible', Body: 'Responsible' },
     { Head: 'Status', Body: 'Status' },
     {
       Head: 'Action',
       Body: '',
-      icon: 'fal fa-pencil',
+      icon: 'fal fa-eye',
       secondIcon: ' fal fa-trash',
     },
   ];
   ngOnInit() {
     this.getTaskList();
-    console.log(this.taskList);
     this.subscriptions.add(
       this.dialog.afterAllClosed.subscribe(() => {
         this.getTaskList();
@@ -57,6 +53,7 @@ export class CallListComponent implements OnInit {
           Status: this.statusPipe.transform(item.Status),
         };
       });
+      console.log(this.taskList);
     });
   }
 

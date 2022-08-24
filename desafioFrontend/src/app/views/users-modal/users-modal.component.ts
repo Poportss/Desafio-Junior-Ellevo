@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscriber } from 'rxjs';
 import { AlertService } from 'src/app/shared/service/alert.service';
@@ -15,13 +19,16 @@ export class UsersModalComponent implements OnInit {
   private subscriptions = new Subscriber();
   @Output() modalClosed = new EventEmitter();
 
-  newUserForm = new FormGroup({
-    Name: new FormControl('', [Validators.required]),
-    User: new FormControl('', [Validators.required]),
-    Password: new FormControl('', [Validators.required]),
-    Cpf: new FormControl('', [Validators.required, Validators.minLength(11)]),
-    Phone: new FormControl('', [Validators.minLength(15)]),
-    Email: new FormControl('', [Validators.email]),
+  newUserForm = new UntypedFormGroup({
+    Name: new UntypedFormControl('', [Validators.required]),
+    User: new UntypedFormControl('', [Validators.required]),
+    Password: new UntypedFormControl('', [Validators.required]),
+    Cpf: new UntypedFormControl('', [
+      Validators.required,
+      Validators.minLength(11),
+    ]),
+    Phone: new UntypedFormControl('', [Validators.minLength(15)]),
+    Email: new UntypedFormControl('', [Validators.email]),
   });
 
   constructor(

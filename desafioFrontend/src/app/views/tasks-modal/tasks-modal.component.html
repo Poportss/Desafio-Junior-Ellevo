@@ -28,16 +28,15 @@
 
   <div class="control-container">
     <mat-form-field
-      class="example-full-width"
+      (change)="changeDefault($event.target.value)"
       style="width: 100%"
       appearance="outline"
     >
-      <mat-label>Responsible</mat-label>
-      <input formControlName="Responsible" matInput placeholder="Responsible" />
-      <mat-error
-        *ngIf="newTaskForm.controls['Responsible'].hasError('required')"
-        >This field is mandatory.</mat-error
-      >
+      <mat-select placeholder="Responsible" formControlName="Responsible">
+        <mat-option *ngFor="let name of userList" [value]="name.Id">
+          {{ name?.Name }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div class="control-container">
@@ -47,11 +46,7 @@
       appearance="outline"
     >
       <mat-select placeholder="Status" formControlName="Status">
-        <mat-option
-          [selected]="option === nrSelect"
-          *ngFor="let name of enumKeys"
-          [value]="name"
-        >
+        <mat-option *ngFor="let name of enumKeys" [value]="name">
           {{ name | status }}
         </mat-option>
       </mat-select>

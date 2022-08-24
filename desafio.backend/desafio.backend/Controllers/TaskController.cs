@@ -37,7 +37,7 @@ namespace desafio.backend.Controllers
         [HttpGet("{id:length(24)}", Name = "GetTask")]
         public ActionResult<TaskModel> Get(string id)
         {
-            var task = _taskService.Get(id);
+            var task = _taskService.GetById(id);
 
             if (task is null)
                 return NotFound();
@@ -58,7 +58,7 @@ namespace desafio.backend.Controllers
         [HttpPut("{id:length(24)}")]
         public ActionResult<TaskModel> Update(string id, UpdateTaskModel user)
         {
-            var taskIn = _taskService.Get(id);
+            var taskIn = _taskService.GetEntity(id);
 
             if (taskIn is null)
                 return NotFound();
@@ -74,7 +74,7 @@ namespace desafio.backend.Controllers
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            var task = _taskService.Get(id);
+            var task = _taskService.GetById(id);
 
             
             if (task is null)

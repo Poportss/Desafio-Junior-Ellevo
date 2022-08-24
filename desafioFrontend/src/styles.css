@@ -59,11 +59,11 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.table .paginator .ngx-pagination .current {
+.paginator .ngx-pagination .current {
   background-color: #233238;
   text-decoration: none;
 }
-.table .paginator .ngx-pagination a,
+.paginator .ngx-pagination a,
 .ngx-pagination button {
   text-decoration: none;
 }

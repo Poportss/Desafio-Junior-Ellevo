@@ -3,14 +3,11 @@ import { Injectable } from '@angular/core';
 import { catchError, delay, map, retryWhen, take } from 'rxjs/operators';
 import { User } from 'src/app/shared/models/User.model';
 import { HttpUtilService } from 'src/app/shared/service/http-util.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private API_URL = environment.URL + 'api/';
-
   constructor(private http: HttpClient, private httpUtil: HttpUtilService) {}
 
   getUser() {

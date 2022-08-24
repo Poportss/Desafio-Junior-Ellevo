@@ -50,6 +50,8 @@ namespace desafio.backend
             services.AddTransient<ActivityService>();
 
             services.AddHttpContextAccessor();
+            services.AddTransient<ITaskRepository,TaskRepository>();
+            services.AddTransient<IActivityRepository, ActivityRepository>();
             services.AddTransient<IUserRepository,UserRepository>();
             services.AddAutoMapper(typeof(EntityToModelMapping),typeof(ModelToEntityMapping));
             services.AddCors(options =>

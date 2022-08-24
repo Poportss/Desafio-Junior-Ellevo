@@ -3,13 +3,11 @@ import { Injectable } from '@angular/core';
 import { map, retryWhen, delay, take, catchError } from 'rxjs';
 import { Task } from 'src/app/shared/models/Task.model';
 import { HttpUtilService } from 'src/app/shared/service/http-util.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private API_URL = environment.URL;
   constructor(private http: HttpClient, private httpUtil: HttpUtilService) {}
   getTasks() {
     return this.http.get('https://localhost:5001/api/task');

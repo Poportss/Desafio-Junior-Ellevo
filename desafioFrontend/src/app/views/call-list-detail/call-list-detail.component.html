@@ -1,14 +1,23 @@
 <div class="call-list-detail">
   <div class="container">
+    <div style="text-align: end">
+      <button
+        mat-flat-button
+        style="margin-bottom: 0.5rem; background-color: transparent"
+        (click)="back()"
+      >
+        <mat-icon>home</mat-icon>
+      </button>
+    </div>
     <form [formGroup]="UpadateForm" class="normal-form" (submit)="save()">
       <div class="row">
         <div class="col-6">
           <mat-card
-            style="width: 100%; height: 92%; box-shadow: 3px 3px #888888"
+            style="width: 100%; height: 100%; box-shadow: 3px 3px #888888"
           >
             <div>
               <mat-form-field
-                class="example-full-width"
+                class="example-full-width mt-5"
                 style="width: 100%"
                 appearance="outline"
               >
@@ -16,19 +25,29 @@
                 <input matInput formControlName="Title" />
               </mat-form-field>
             </div>
-            <div>
+
+            <div style="margin-top: 2rem">
               <ckeditor
-                [required]
-                formControlName="Description"
                 [editor]="Editor"
+                formControlName="Description"
               ></ckeditor>
             </div>
           </mat-card>
         </div>
         <div class="col-6">
           <mat-card
-            style="width: 100%; height: 92%; box-shadow: 3px 3px #888888"
+            style="width: 100%; height: 100%; box-shadow: 3px 3px #888888"
           >
+            <div>
+              <mat-form-field
+                class="example-full-width"
+                style="width: 100%"
+                appearance="outline"
+              >
+                <mat-label>Generator</mat-label>
+                <input matInput formControlName="GeneratorName" />
+              </mat-form-field>
+            </div>
             <div>
               <mat-form-field
                 class="example-full-width"
@@ -37,7 +56,7 @@
               >
                 <mat-label>Responsible</mat-label>
                 <input
-                  formControlName="Responsible"
+                  formControlName="ResponsibleName"
                   matInput
                   placeholder="Responsible"
                 />
@@ -75,10 +94,11 @@
   </div>
 
   <mat-card
-    style="width: 100%; margin-top: 0.5rem; box-shadow: 3px 3px #888888"
+    style="width: 100%; margin-top: 1.5rem; box-shadow: 3px 3px #888888"
   >
     <form [formGroup]="detailForm" class="normal-form" (submit)="onSubmit()">
       <mat-card-title>Activity</mat-card-title>
+
       <div style="text-align: end">
         <button
           style="margin-bottom: 1rem; justify-content: end"
@@ -89,22 +109,20 @@
         </button>
       </div>
       <div>
-        <ckeditor
-          [required]
-          formControlName="Activity"
-          [editor]="Editor"
-        ></ckeditor>
+        <ckeditor [editor]="Editor" formControlName="Activity"></ckeditor>
       </div>
       <div class="activity-list">
-        <span
+        <p
+          style="margin-left: 1rem"
           *ngFor="
             let activity of taskActivity
-              | paginate: { itemsPerPage: 4, currentPage: p }
+              | paginate: { itemsPerPage: 5, currentPage: p }
           "
+          [innerHTML]="activity.Activity"
         >
           {{ activity?.Activity }}
           <br />
-        </span>
+        </p>
       </div>
       <div
         style="

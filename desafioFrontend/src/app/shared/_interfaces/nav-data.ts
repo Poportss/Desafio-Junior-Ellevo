@@ -2,11 +2,6 @@ import { INavBarData } from 'src/app/shared/_interfaces/helper';
 
 export const navbarData: INavBarData[] = [
   {
-    routerLink: 'dashboard',
-    icon: 'fal fa-home',
-    label: 'Dashboard',
-  },
-  {
     routerLink: 'callList',
     icon: 'fal fa-list-alt',
     label: 'Call List',
