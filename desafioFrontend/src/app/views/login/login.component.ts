@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
             icon: 'success',
             title: 'Signed in successfully',
           });
-          this.router.navigate(['/']);
+          this.router.navigate(['/callList']);
         },
         (err) => {
           const Toast = Swal.mixin({
