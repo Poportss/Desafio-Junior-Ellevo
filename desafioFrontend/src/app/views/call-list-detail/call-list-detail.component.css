@@ -5,10 +5,13 @@
   width: 100px;
 }
 .activity-list {
-  background-color: #67676797;
+  background-color: #0a0a0a52;
   color: white;
   margin-top: 1rem;
   border-radius: 8px;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
 .activity-list span p {
   font-size: larger;
